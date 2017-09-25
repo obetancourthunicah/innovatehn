@@ -1,0 +1,26 @@
+{{#if notLoggedin}}
+  <form action="login" method="post">
+    <label>Correo</label>
+    <input type="email" value="{{useremail}}"
+        name="useremail" id="useremail"
+        placeholder="Tu Correo Electrónico"
+        /><br />
+      <label>Contraseña</label>
+      <input type="password" value="{{userpswd}}"
+          name="userpswd" id="userpswd"
+          placeholder="Contraseña"
+          /><br />
+          <input type="submit" value="Iniciar Sesión"
+            name="btnEnviar"/>
+  </form>
+
+  {{#if error}}
+    <div class="errormsg">
+      {{error}}
+    </div>
+  {{/if}}
+{{else}}
+  <form action="logout" method="post">
+    <input type="submit" value="Cerrar Sesión" name="BtnCerrrar" />
+  </form>
+{{/if}}

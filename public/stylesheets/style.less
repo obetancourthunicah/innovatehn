@@ -133,8 +133,8 @@ body{
   padding: 0px;
   flex:1;
   align-self: stretch;
-  background-position: center;
-  background-size: cover;
+  background-position: center center;
+  background-size: 80%;
   background-repeat: no-repeat;
 
 }
@@ -202,12 +202,16 @@ body{
 }
 
 .boletos{
-  background-color: @textPrimaryColor;
+  background-color: @accentColor;
   margin:0px;
   margin-top:-3em;
   padding-top:4em;
   color:@primaryColor;
-  min-height: 380px;
+  min-height: 640px;
+  background-image:url('/images/logoU2.png');
+  background-repeat:no-repeat;
+  background-size:80%;
+  background-position:bottom center;
   h1{
     font-size: 6em;
     font-weight: bold;
@@ -215,7 +219,7 @@ body{
     text-align: center;
     color:@primaryColor;
     font-family: @titleFontFamily;
-    margin: 0px;
+    margin: 1em 0px 0px 0px;
     padding: 0px;
     text-align: center;
     line-height: 1;

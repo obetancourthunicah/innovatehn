@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 function initApp(db){
     var app = express();
@@ -25,6 +26,7 @@ function initApp(db){
       secret: 'lokdnjaiiwkekmkowjf102849m',
       resave: false,
       saveUninitialized: true,
+      store: new MongoStore({db:db}),  // guarda la data en mongodb en vez de memoria.
        cookie: { maxAge: (5*60*1000) } // m * d * h * m * s * ms
     }));
 

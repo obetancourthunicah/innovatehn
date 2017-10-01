@@ -172,8 +172,12 @@ body{
         padding:0.5em;
         img{
           display: block;
-          width: 200px;
-          height: 200px;
+          width: 150px;
+          height: 150px;
+          @media (min-width: 1024px){
+            width: 200px;
+            height: 200px;
+          }
           margin: 1em auto 0px auto;
           margin-top:1em;
           padding: 0px;
@@ -358,4 +362,18 @@ button{
 }
 .error{
   color:@errorcolor;
+}
+
+.patrocinadores{
+  img{
+    display: block;
+    width: 150px;
+    height: 150px;
+    padding: 0px;
+    margin: 1em auto 0em auto;
+    border-radius: 50%;
+    @media (min-width: 480px){
+      margin: 0em auto;
+    }
+  }
 }

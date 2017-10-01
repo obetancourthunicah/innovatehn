@@ -1,0 +1,108 @@
+<form action="signup" method="post">
+  <h1 class="center">Crear Cuenta</h1>
+  <fieldset class="row">
+    <label class="col-s-4 col-m-3 col-m-offset-1 col-l-2 col-l-offset-4">Nombre Completo</label>
+    <input type="text" value="{{username}}" class="col-s-4 col-m-5 col-l-2"
+        name="username" id="username"
+        placeholder="Nombre Completo"/>
+    <div class="error col-s-4 col-m-4 col-m-offset-4 col-l-2 col-l-offset-6" id="errors_username">
+    {{#if errors.username}}
+      {{errors.username}}
+    {{/if}}
+    </div>
+  </fieldset>
+  <fieldset class="row">
+      <label class="col-s-4 col-m-3 col-m-offset-1 col-l-2 col-l-offset-4">Correo Electrónico</label>
+      <input type="email" value="{{useremail}}" class="col-s-4 col-m-5 col-l-2"
+          name="useremail" id="useremail"
+          placeholder="Tu Correo Electrónico"
+          />
+      <div class="error col-s-4 col-m-4 col-m-offset-4 col-l-2 col-l-offset-6" id="errors_useremail">
+      {{#if errors.useremail}}
+        {{errors.useremail}}
+      {{/if}}
+      </div>
+  </fieldset>
+  <fieldset class="row">
+      <label class="col-s-4 col-m-3 col-m-offset-1 col-l-2 col-l-offset-4">Contraseña</label>
+      <input type="password" value="{{userpswd}}" class="col-s-4 col-m-5 col-l-2"
+          name="userpswd" id="userpswd"
+          placeholder="Contraseña"
+          />
+      <div class="error col-s-4 col-m-4 col-m-offset-4 col-l-2 col-l-offset-6" id="errors_userpswd">
+      {{#if errors.userpswd}}
+        {{errors.userpswd}}
+      {{/if}}
+      </div>
+  </fieldset>
+  <fieldset class="row">
+      <label class="col-s-4 col-m-3 col-m-offset-1 col-l-2 col-l-offset-4">Confirmar Contraseña</label>
+      <input type="password" value="{{userpswdcnf}}" class="col-s-4 col-m-5 col-l-2"
+          name="userpswdcnf" id="userpswdcnf"
+          placeholder="Confirmar Contraseña"
+          />
+      <div class="error col-s-4 col-m-4 col-m-offset-4 col-l-2 col-l-offset-6" id="errors_userpswdcnf">
+      {{#if errors.userpswdcnf}}
+        {{errors.userpswdcnf}}
+      {{/if}}
+      </div>
+  </fieldset>
+  <fieldset class="row">
+      <button class="primary col-s-4 col-m-5 col-l-2 col-m-offset-4 col-l-offset-6" id="btnDoRegister">Crear Cuenta</button>
+  </fieldset>
+  </form>
+  <script>
+  function validateEmail(email){
+      return (/^\S+@\S+\.\S+$/).test(email);
+  }
+  function validatePassword(pswd){
+      return (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/).test(pswd);
+  }
+
+  function validateGender(gender){
+      return (/^[MF]$/).test(gender)
+  }
+  function isEmpty(testValue){
+    return (/^\s+$|^$/gi).test(testValue);
+  }
+
+  window.addEventListener('load', function(e) {
+    document.getElementById('btnDoRegister').addEventListener('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var username = document.getElementById("username").value;
+        var useremail = document.getElementById("useremail").value;
+        var userpswd = document.getElementById("userpswd").value;
+        var userpswdcnf = document.getElementById("userpswdcnf").value;
+        var hasErrors = false;
+        if(!validateEmail(useremail)) {
+          document.getElementById("errors_useremail").innerHTML = "Ingresar un Correo Válido";
+          hasErrors = true;
+        }else{
+          document.getElementById("errors_useremail").innerHTML="";
+        }
+        if(!validatePassword(userpswd)) {
+          document.getElementById("errors_userpswd").innerHTML = "La contraseña debe tener almenos 8 caracteres, una mayuscula y un número.";
+          hasErrors = true;
+        }else{
+          document.getElementById("errors_userpswd").innerHTML="";
+        }
+        if(userpswd !== userpswdcnf){
+          document.getElementById("errors_userpswdcnf").innerHTML = "Las contraseñas no coinciden.";
+          hasErrors = true;
+        }else{
+          document.getElementById("errors_userpswdcnf").innerHTML="";
+        }
+        if(isEmpty(username)) {
+          document.getElementById("errors_username").innerHTML = "El nombre es requerido";
+          hasErrors = true;
+        }else{
+          document.getElementById("errors_username").innerHTML="";
+        }
+        if(!hasErrors){
+          document.forms[0].submit();
+        }
+
+      });
+  });
+  </script>

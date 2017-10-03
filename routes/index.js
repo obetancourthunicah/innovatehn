@@ -42,7 +42,7 @@ function initRoute(db){
                       req.session.userid = r_user._id;
                       req.session.useremail = r_user.useremail;
                       req.session.userData = r_user;
-                       res.redirect("/dashboard");
+                      res.redirect("/dashboard");
                     }
                 });//userModel.login
               }

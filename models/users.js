@@ -10,7 +10,8 @@ const UserTemplate={
   "userphone":"",
   "userUnicahAccount":"",
   "userpicuri":"",
-  "useremailconfirmed":false
+  "useremailconfirmed":false,
+  "userroles":[]
 }
 
 function UserModel(db){
@@ -19,6 +20,7 @@ function UserModel(db){
 
   this.newUser = (useremail, userpswd, username, usergender,userphone,userUnicahAccount, handler)=>{
     let nUser = Object.assign({},UserTemplate,{useremail, userpswd, username, usergender,userphone,userUnicahAccount});
+    nUser.userroles.push("public");
     let errors =[];
     if(!validateEmail(nUser.useremail)) errors.push({"useremail":"Correo en Formato incorrecto."});
     if(!validatePassword(nUser.userpswd)) errors.push({"userpswd":"Contraseña deben ser almenos de 8 characters de largo, incluir una mayúscula y un número."});

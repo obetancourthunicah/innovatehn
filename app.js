@@ -27,13 +27,12 @@ function initApp(db){
       resave: false,
       saveUninitialized: true,
       store: new MongoStore({db:db}),  // guarda la data en mongodb en vez de memoria.
-       cookie: { maxAge: (5*60*1000) } // m * d * h * m * s * ms
+       cookie: { maxAge: (15*60*1000) } // m * d * h * m * s * ms
     }));
 
     app.use(express.static(path.join(__dirname, 'public')));
 
     var index = require('./routes/index')(db);
-    var users = require('./routes/users');
 
     app.use('/', index);
 

@@ -1,15 +1,77 @@
-<section class="row">
-  <div class="profile col-s-4 col-m-5 col-l-4">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.10&appId=363327897423878";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<div class="row full">
+  <div class="col-s-4 col-m-5 col-l-4 profile">
     <div class="card center">
       <img class="circle" src="/images/expositores/expo1.svg" />
       <b>{{user.username}}</b>
+      <br />
+      <a class="button small" href>Editar Perfil</a>
+      </div>
 
+      <div class="center card">
+            <a href="https://twitter.com/intent/tweet?button_hashtag=InnovateHN" class="twitter-hashtag-button" data-size="large" data-text="Me he registrado al evento InnovateHN" data-url="https://innovatehn.unicah.edu" data-related="unicahonduras" data-show-count="false">Tweet #InnovateHN</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <br/>
+            <div class="fb-follow" data-href="https://www.facebook.com/icc.unicah/" data-layout="button_count" data-size="large" data-show-faces="true"></div>
+          </br/>
+        </div>
     </div>
-    <div class="center card">
-        <a href="https://twitter.com/intent/tweet?button_hashtag=InnovateHN" class="twitter-hashtag-button" data-size="large" data-text="Me he registrado al evento InnovateHN" data-url="https://innovatehn.unicah.edu" data-related="unicahonduras" data-show-count="false">Tweet #InnovateHN</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <div class="col-s-4 col-m-7 col-l-8">
+      <div class="row widgets">
+        <div class="card col-s-4 col-m-12 col-l-5 center">
+            <b>En {{datediff}} días te esperamos para el mayor evento tecnológico.
+              Si aun no tienes tu boleto aun estas a tiempo</b>
+            <div>
+              <br />
+              <b>Contactanos</b>
+              <ul style="list-style:none;padding:0px;font-family:monospace;">
+                <li>98187817</li>
+                <li>95946513</li>
+                <li>32826403</li>
+                <li>97903708</li>
+                <li>aiccscj@unicah.edu</li>
+              </ul>
+            </div>
+        </div>
+
+        {{#if isAdmin}}
+          <div class="card col-s-4 col-m-12 col-l-4 center">
+            <b>Registrados</b><br />
+            {{usercount}}
+          </div>
+          <div class="card col-s-4 col-m-12 col-l-5 center">
+            <b>Boletos Registrados</b><br />
+            <table style="width:100%;">
+              <tr>
+                <th>&nbsp;</th>
+                <th>Gold</th>
+                <th>Silver</th>
+              </tr>
+              <tr>
+                <td>Preventa</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Venta</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Insitu</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+            </table>
+          </div>
+        {{/if}}
+      </div>
     </div>
-  </div>
-  <div class="col-s-4 col-m-6 col-l-8">
-    <h1>Espera pronto mas información aquí</h1>
-  </div>
-</section>
+</div>

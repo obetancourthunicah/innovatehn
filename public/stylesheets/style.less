@@ -115,7 +115,10 @@ body{
 }
 .hero .c.title{
   flex:1;
-  font-size: 2.5em;
+  font-size: 1.5em;
+  @media (min-width: 720px){
+    font-size: 2.5em;
+  }
   font-family: @titleFontFamily;
   line-height: 1.1;
   align-items: center;
@@ -222,16 +225,17 @@ body{
 }
 
 .boletos{
-  background-color: @accentColor;
+  background-color: #777;
   margin:0px;
   margin-top:-3em;
-  padding-top:4em;
+  margin-bottom: 2em;
+  padding-top:2em;
   color:@primaryColor;
   min-height: 640px;
   background-image:url('/images/logoU2.png');
   background-repeat:no-repeat;
-  background-size:80%;
-  background-position:bottom center;
+  background-size:contain;
+  background-position:bottom left;
   h1{
     font-size: 6em;
     font-weight: bold;
@@ -278,7 +282,10 @@ body{
     padding:0px 0.25em;
   }
   @media (min-width:720px){
-    padding:0px 0.5em;
+    padding:0px 0em;
+  }
+  &.full{
+    padding:0px;
   }
 }
 
@@ -332,13 +339,16 @@ input[placeholder]{
   box-shadow: 1px 1px 3px @darkPrimaryColor;
 }
 
-button{
+button, a.button{
+  display: inline-block;
   padding:1em;
   width:100%;
   text-align: center;
   border-radius: 5px;
   border-style: solid;
   box-shadow: 1px 1px 3px @darkPrimaryColor;
+  text-decoration: none;
+  color:@primaryTextColor;
   &.primary{
     background-color: @primaryColor;
     color:@textPrimaryColor;
@@ -350,9 +360,13 @@ button{
     }
   }
 }
+a.button.small{
+  padding: 0.25em 0.5em;
+}
 
 .profile{
   padding-top:1em;
+  padding-bottom: 1em;
   background-color: @lightPrimaryColor;
 }
 
@@ -375,6 +389,9 @@ button{
 .center {
   text-align: center;
 }
+.right{
+  text-align: right;
+}
 .error{
   color:@errorcolor;
 }
@@ -396,4 +413,71 @@ button{
       margin: 1em auto;
     }
   }
+}
+
+.boletos_ex{
+  //background-color: @darkPrimaryColor;
+  display: flex;
+  align-items:flex-start;
+  justify-content: center;
+  padding:1em;
+  padding-bottom: 4em;
+  color:#000;
+  .card{
+    position: relative;
+    max-width: 250px;
+    min-height: 350px;
+    table{
+      border-spacing: 0;
+      td{
+        padding: 0.25em 0em;
+      }
+      .bu{
+        border-top: solid 1px #333;
+      }
+      .bd{
+        border-bottom: solid 1px #333;
+      }
+    }
+    .silver, .gold{
+      width:150px;
+      height: 150px;
+      padding-top: 47px;
+      font-size: 2em;
+      border-radius: 50%;
+      text-align: center;
+      box-shadow: 1px 1px 3px @darkPrimaryColor;
+      margin:1em auto;
+    }
+
+    &.golden ,.gold{
+      background: rgba(252,234,187,1);
+      background: -moz-linear-gradient(45deg, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 46%, rgba(248,181,0,1) 72%, rgba(251,223,147,1) 100%);
+      background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(252,234,187,1)), color-stop(46%, rgba(252,205,77,1)), color-stop(72%, rgba(248,181,0,1)), color-stop(100%, rgba(251,223,147,1)));
+      background: -webkit-linear-gradient(45deg, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 46%, rgba(248,181,0,1) 72%, rgba(251,223,147,1) 100%);
+      background: -o-linear-gradient(45deg, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 46%, rgba(248,181,0,1) 72%, rgba(251,223,147,1) 100%);
+      background: -ms-linear-gradient(45deg, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 46%, rgba(248,181,0,1) 72%, rgba(251,223,147,1) 100%);
+      background: linear-gradient(45deg, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 46%, rgba(248,181,0,1) 72%, rgba(251,223,147,1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93', GradientType=1 );
+    }
+    &.silverado ,.silver{
+      background: rgba(226,226,226,1);
+      background: -moz-linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 53%, rgba(209,209,209,1) 72%, rgba(254,254,254,1) 100%);
+      background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(226,226,226,1)), color-stop(53%, rgba(219,219,219,1)), color-stop(72%, rgba(209,209,209,1)), color-stop(100%, rgba(254,254,254,1)));
+      background: -webkit-linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 53%, rgba(209,209,209,1) 72%, rgba(254,254,254,1) 100%);
+      background: -o-linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 53%, rgba(209,209,209,1) 72%, rgba(254,254,254,1) 100%);
+      background: -ms-linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 53%, rgba(209,209,209,1) 72%, rgba(254,254,254,1) 100%);
+      background: linear-gradient(45deg, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 53%, rgba(209,209,209,1) 72%, rgba(254,254,254,1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+    }
+  }
+}
+
+
+.widgets{
+  display: flex;
+  align-items: flex-start;
+  justify-content:flex-start;
+  padding:1em 0.5em;
+  flex-wrap: wrap;
 }

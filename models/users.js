@@ -11,7 +11,7 @@ const UserTemplate={
   "userUnicahAccount":"",
   "userpicuri":"",
   "useremailconfirmed":false,
-  "userroles":[]
+  "userroles":["public"]
 }
 
 function UserModel(db){
@@ -20,7 +20,7 @@ function UserModel(db){
 
   this.newUser = (useremail, userpswd, username, usergender,userphone,userUnicahAccount, handler)=>{
     let nUser = Object.assign({},UserTemplate,{useremail, userpswd, username, usergender,userphone,userUnicahAccount});
-    nUser.userroles.push("public");
+
     let errors =[];
     if(!validateEmail(nUser.useremail)) errors.push({"useremail":"Correo en Formato incorrecto."});
     if(!validatePassword(nUser.userpswd)) errors.push({"userpswd":"Contraseña deben ser almenos de 8 characters de largo, incluir una mayúscula y un número."});
@@ -45,6 +45,7 @@ function UserModel(db){
               errors.push({"db":"No se pudo guardar, intentelo nuevamente."});
               return handler(errors,null);
             }else{
+              console.log(result.ops);
               return handler(null, result.ops);
             }
           });//end insertOne
@@ -83,7 +84,12 @@ function UserModel(db){
     });// findone
   }//login
 
-
+  this.getUsersCount=(handler)=>{
+    _self.userCll.count({},function(err,result){
+      if(err) return handler(err,null);
+      return handler(null,result);
+    });//end count
+  }
 }
 
 module.exports = (db) => {

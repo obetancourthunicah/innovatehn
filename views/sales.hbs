@@ -1,0 +1,21 @@
+<div class="row">
+  <form action="/sales" method="post" class="col-s-4 col-m-8 col-m-offset-2 col-l-6 col-l-offset-3">
+    <fieldset class="row">
+      <input class="col-s-4 col-m-8 col-l-8 norbrd" type="text" value="{{qr}}" name="qr" placeholder="Filtrar por Nombre o Correo" />
+      <button class="col-s-4 col-m-4 col-l-4 primary small nolbrd" type="submit">Filtrar</button>
+    </fieldset>
+  </form>
+</div>
+
+<div class="row">
+  {{#each blts}}
+    <div class="col-s-4 col-m-5 col-l-3 card center">
+      <b>{{username}}</b>
+      <span style="font-size:0.75em">{{useremail}}</span>
+      <form action="/prepareticketsale/{{_id}}" method="post">
+          <button type="submit" name="goldbtn" value="gold" class="gold" style="width:40%">Gold</button>
+          <button type="submit" name="silverbtn" value="silver" class="silver" style="width:40%">Silver</button>
+      </form>
+    </div>
+  {{/each}}
+</div>

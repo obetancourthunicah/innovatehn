@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-s-4 col-m-8 col-l-6 col-m-offset-2 col-l-offset-3">
+      <h2>Confirmar Registro de Boleto</h2>
+  </div>
+</div>
+<div class="row">
+  <form id="f0c1" action="/confirmticketsale/{{etk}}" method="post" class="col-s-4 col-m-8 col-l-6 col-m-offset-2 col-l-offset-3">
+    <fieldset>
+        <label class="col-s-4 col-m-4">Usuario Registrado</label><b class="col-s-4 col-m-6">{{user.username}}</b>
+    </fieldset>
+    <fieldset>
+        <label class="col-s-4 col-m-4">Tipo de Boleto</label><b class="col-s-4 col-m-6">{{type}}</b>
+    </fieldset>
+    <fieldset>
+      <label class="col-s-4 col-m-4">Número de Boleto</label>
+      {{#if isGold}}
+        <input class="col-s-4 col-m-6" type="text" id="boletonum" name="boletonum" placeholder="# de Boleto Gold (PR0***)" />
+      {{else}}
+        <input class="col-s-4 col-m-6" type="text" id="boletonum" name="boletonum" placeholder="# de Boleto Gold (PL0***)" />
+      {{/if}}
+    </fieldset>
+    <fieldset>
+        <label class="col-s-4 col-m-4">Registrado Por</label><b class="col-s-4 col-m-6">{{username}}</b>
+    </fieldset>
+    <fieldset>
+      <a class="button primary small" id="btnSubmit">Guardar</a>
+      <div class="error col-s-4" id="errors_userpswd" style="padding:1em;text-align:center">
+      {{#if errors}}
+          {{errors}}
+      {{/if}}
+      </div>
+    </fieldset>
+
+  </form>
+</div>
+
+  <script>
+  {{#if isGold}}
+    var reVal = /^PR0[0123][0-9][0-9]$/;
+  {{else}}
+    var reVal = /^PL0[0123][0-9][0-9]$/;
+  {{/if}}
+  var processing = false;
+  document.addEventListener("DOMContentLoaded", function(event) {
+        var btnSubmit = document.getElementById("btnSubmit");
+        var boletonum = document.getElementById("boletonum");
+        var errorp = document.getElementById("errors_userpswd");
+        var form = document.getElementById("f0c1");
+        btnSubmit.addEventListener('click', function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            if(processing) return;
+            processing = true;
+            boletonum.value = boletonum.value.toUpperCase();
+            var hasErrors= false;
+            if(!reVal.test(boletonum.value)){
+              hasErrors = true;
+              errorp.innerHTML = "El número de boleto no tiene el formato adecuado.";
+            }
+            if(!hasErrors){
+              errorp.innerHTML = "";
+              form.submit();
+            }
+            processing=false;
+        });
+  });
+
+  </script>

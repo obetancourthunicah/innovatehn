@@ -12,16 +12,22 @@
     <div class="card center">
       <img class="circle" src="/images/expositores/expo1.svg" />
       <b>{{user.username}}</b>
+      {{#if user.boletonum}}
+        <b>{{user.boletonum}} | {{user.boletotyp}}</b>
+      {{/if}}
       <br />
-      <a class="button small" href>Editar Perfil</a>
-      </div>
+      <a class="button small" href="/profile">Editar Perfil</a>
+      {{#if isSales}}
+        <a class="button small" href="/sales">Registrar Boletos</a>
+      {{/if}}
+    </div>
 
-      <div class="center card">
-            <a href="https://twitter.com/intent/tweet?button_hashtag=InnovateHN" class="twitter-hashtag-button" data-size="large" data-text="Me he registrado al evento InnovateHN" data-url="https://innovatehn.unicah.edu" data-related="unicahonduras" data-show-count="false">Tweet #InnovateHN</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-            <br/>
-            <div class="fb-follow" data-href="https://www.facebook.com/icc.unicah/" data-layout="button_count" data-size="large" data-show-faces="true"></div>
-          </br/>
-        </div>
+    <div class="center card">
+          <a href="https://twitter.com/intent/tweet?button_hashtag=InnovateHN" class="twitter-hashtag-button" data-size="large" data-text="Me he registrado al evento InnovateHN" data-url="https://innovatehn.unicah.edu" data-related="unicahonduras" data-show-count="false">Tweet #InnovateHN</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+          <br/>
+          <div class="fb-follow" data-href="https://www.facebook.com/icc.unicah/" data-layout="button_count" data-size="large" data-show-faces="true"></div>
+        </br/>
+    </div>
     </div>
     <div class="col-s-4 col-m-7 col-l-8">
       <div class="row widgets">
@@ -55,19 +61,9 @@
                 <th>Silver</th>
               </tr>
               <tr>
-                <td>Preventa</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-              <tr>
                 <td>Venta</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <td>Insitu</td>
-                <td>0</td>
-                <td>0</td>
+                <td>{{stats.gold}}</td>
+                <td>{{stats.silver}}</td>
               </tr>
             </table>
           </div>

@@ -11,7 +11,8 @@ const UserTemplate={
   "userUnicahAccount":"",
   "userpicuri":"",
   "useremailconfirmed":false,
-  "userroles":["public"]
+  "userroles":["public"],
+  "boletoregistered":false
 }
 
 function UserModel(db){
@@ -90,7 +91,34 @@ function UserModel(db){
       return handler(null,result);
     });//end count
   }
-}
+
+  this.getUsersUnRegisteredBoleto=(filter,handler)=>{
+    let q = {"$or":[
+              {"username":{"$regex":filter}},
+              {"useremail":{"$regex":filter}}
+            ], "boletoregistered":false};
+    _self.userCll.find(q).toArray(
+      (err, docs)=>{
+        if(err){return handler(err, null)};
+        return handler(null, docs);
+      }
+    );
+  }
+
+  this.getUserById=(uid,handler)=>{
+    let q = {"_id": new ObjectID(uid)};
+    _self.userCll.findOne(q,
+      (err, doc)=>{
+        if(err){return handler(err, null)};
+        if(!doc){return handler(new Error("No se encontro usuario"), null);}
+        return handler(null, doc);
+      }
+    );
+  } //getUserById
+
+} // end UserModel
+
+
 
 module.exports = (db) => {
   return new UserModel(db);

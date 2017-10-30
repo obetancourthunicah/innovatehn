@@ -116,6 +116,13 @@ function UserModel(db){
     );
   } //getUserById
 
+  this.getUsersByType=(typeData, handler)=>{
+    let q= {"boletotyp": typeData };
+    _self.userCll.find(q).toArray((err,usr)=>{
+      if(err) return handler(err,[]);
+      return handler(null, usr);
+    });
+  }
 } // end UserModel
 
 

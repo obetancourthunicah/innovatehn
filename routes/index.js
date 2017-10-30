@@ -227,6 +227,18 @@ function initRoute(db){
                     }
                   }
             });
+  router.get('/csv/:blttype',validate,checkIsSales,
+        function(req,res,next){
+          userModel.getUsersByType(req.params.blttype, (err,usrs)=>{
+
+          res.set('Content-Type', 'text/csv');
+          res.set("Content-Disposition", "attachment;"+req.params.blttype+".csv");
+          let bodystr = usrs.map((i)=>{return [i.username,i.useremail,i.boletonum,i.boletotyp].join(",");}).join('\r\n');
+          res.send(Buffer.from(bodystr));
+          }
+        );
+    }
+  );
 
 //utilitarios
  function datefiff(){

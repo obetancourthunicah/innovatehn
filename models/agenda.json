@@ -1,0 +1,86 @@
+[
+  {
+    acode:"g001",
+    ini:new Date(2017,11,2,8,0,0).getTime(),
+    end:new Date(2017,11,2,8,50,0).getTime(),
+    who:"Estuado Ilescas",
+    dsc:"Diseño y modelado en 3D",
+    ctx:"Conferencia",
+    plc:"Aula Magna",
+    cpo:300,
+    cpr:0,
+    grp:"g_2_8_9"
+  },
+  {
+    acode:"g002",
+    ini:new Date(2017,11,2,9,0,0).getTime(),
+    end:new Date(2017,11,2,9,50,0).getTime(),
+    who:"Chang, Ho-Yu",
+    dsc:"Inteligencia Artificial y Robótica",
+    ctx:"Conferencia",
+    plc:"Aula Magna",
+    cpo:300,
+    cpr:0,
+    grp:"g_2_9_10"
+  },
+  {
+    acode:"g003",
+    ini:new Date(2017,11,2,10,10,0).getTime(),
+    end:new Date(2017,11,2,11,0,0).getTime(),
+    who:"Ing. David Díaz",
+    dsc:"Redes de Transmisión y Comunicaciones Sistematizadas",
+    ctx:"Conferencia",
+    plc:"Aula Magna",
+    cpo:300,
+    cpr:0,
+    grp:"g_2_10_11"
+  },
+  {
+    acode:"g004",
+    ini:new Date(2017,11,2,11,10,0).getTime(),
+    end:new Date(2017,11,2,12,0,0).getTime(),
+    who:"BIDSS",
+    dsc:"Emprendedurismo, Éxito y Triunfo en base a la globalización empresarial informatica.",
+    ctx:"Conferencia",
+    plc:"Aula Magna",
+    cpo:300,
+    cpr:0,
+    grp:"g_2_10_11"
+  },
+  {
+    acode:"g005",
+    ini:new Date(2017,11,2,13,0,0).getTime(),
+    end:new Date(2017,11,2,18,0,0).getTime(),
+    who:"Estuado Ilescas",
+    dsc:"Diseño y modelado en 3D para videojuegos y películas",
+    ctx:"Taller",
+    plc:"Aula Magna",
+    cpo:300,
+    cpr:0,
+    grp:"g_2_13_18"
+  },
+  {
+    acode:"g006",
+    ini:new Date(2017,11,2,13,0,0).getTime(),
+    end:new Date(2017,11,2,16,0,0).getTime(),
+    who:"Master Gaming",
+    dsc:"Enfriamiento liquido con tubería rígida Water Cooling",
+    ctx:"Taller",
+    plc:"Aula Magna",
+    cpo:300,
+    cpr:0,
+    grp:"g_2_13_16"
+  },
+  {
+    acode:"g007",
+    ini:new Date(2017,11,2,13,0,0).getTime(),
+    end:new Date(2017,11,2,16,0,0).getTime(),
+    who:"Ing. David Díaz",
+    dsc:"Boot Camp, Datos de Telefonia",
+    ctx:"Taller",
+    plc:"Aula Magna",
+    cpo:300,
+    cpr:0,
+    grp:"g_2_13_18"
+  }
+]

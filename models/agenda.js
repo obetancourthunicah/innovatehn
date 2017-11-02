@@ -56,7 +56,8 @@ function AgendaModel(db){
       {$match: {
         acode:{$regex:(type=="gold")?'g':'s'}
       }
-      }
+      },
+      {$sort:{ini:1}}
     ];
 
     this.agendaCll.aggregate(aggre, function(err, docs){

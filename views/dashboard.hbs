@@ -35,10 +35,10 @@
         <div class="card col-s-4 col-m-12 col-l-12">
           <h2>Agenda InnovateHN</h2>
           {{#each agenda}}
-          <div class="row {{#if isConferencia}} tall{{/if}} {{#if selected}} tall{{/if}}" style="padding-top:0.75em;border-bottom:solid 1px #ddd;">
+          <div  id="{{acode}}" class="row {{#if isConferencia}} tall{{/if}} {{#if selected}} tall{{/if}}" style="padding-top:0.75em;border-bottom:solid 1px #ddd;">
             <div class="col-s-2 col-m-2 col-l-2" style="padding-left:0.5em">
               {{ini}}<br />
-              {{hini}} - {{hend}}
+              {{hini}} - {{hend}}<br />
             </div>
             <div class="col-s-2 col-m-4 col-l-4" style="padding-right:0.75em;">
               {{dsc}}

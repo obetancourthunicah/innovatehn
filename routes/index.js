@@ -227,8 +227,8 @@ function initRoute(db){
                                   return res.render('confirmsales',data);
                                 }
                                 var clientName = req.session.sales.user.username;
-                                req.session.userData.boletonum = bnum.toUpperCase();
-                                req.session.userData.boletotyp = req.session.sales.type.toUpperCase();
+                                //req.session.userData.boletonum = bnum.toUpperCase();
+                                //req.session.userData.boletotyp = req.session.sales.type.toUpperCase();
                                 delete req.session.sales;
                                 return res.render('jserror',{"error":"Boleto " + bnum + " registrado satisfactoriamente a " + clientName + "." , "red":"/sales"});
                               }
@@ -263,7 +263,7 @@ function initRoute(db){
           }
         });
         req.session.userData.agenda = nag;
-        return res.render('jserror',{"error":"Taller Desasociado" , "red":"/dashboard"});
+        return res.render('jserror',{"error":"Taller Desasociado" , "red":"/dashboard#" + req.params.acode});
       }
     );
   });
@@ -272,74 +272,95 @@ function initRoute(db){
     let maxS = 0 ;
     let agg = req.session.userData.agenda || [];
     let ag = agg.filter((a,b)=>{ return (a!==null);});
-    console.log(ag);
+
      if(req.session.userData.boletotyp==="gold"){
 
        if(ag.length){
          if(ag.length == 2){
-           return res.render('jserror',{"error":"No puede agregar mas talleres" , "red":"/dashboard"});
+           return res.render('jserror',{"error":"No puede agregar mas talleres" , "red":"/dashboard#" + req.params.acode});
          }
          if(parseInt(ag[0].substring(1,4)) < 19 && parseInt(req.params.acode.substring(1,4)) < 19){
-           return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard"});
+           return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard#" + req.params.acode});
          }
          if(parseInt(ag[0].substring(1,4)) > 19 && parseInt(req.params.acode.substring(1,4)) > 19){
-           return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard"});
+           return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard#" + req.params.acode});
          }
        }
 
        agndModel.reservaCupo(req.session.userData._id, req.params.acode, (err, dd)=>{
-         if(err) return res.render('jserror',{"error":err.message , "red":"/dashboard"});
+         if(err) return res.render('jserror',{"error":err.message , "red":"/dashboard#" + req.params.acode});
          if(dd && true){
            ag.push(req.params.acode);
            req.session.userData.agenda = ag;
            console.log(ag.length,ag);
-           return res.render('jserror',{"error":"Taller Asociado" , "red":"/dashboard"});
+           return res.render('jserror',{"error":"Taller Asociado" , "red":"/dashboard#" + req.params.acode});
          }else{
-           return res.render('jserror',{"error":"No se pudo asociar Taller" , "red":"/dashboard"});
+           return res.render('jserror',{"error":"No se pudo asociar Taller" , "red":"/dashboard#" + req.params.acode});
          }
        });
        return;
      }else{
+       console.log("silver");
+       console.log(ag);
        if(ag.length){
-         if(ag.length == 6){
-           return res.render('jserror',{"error":"No puede agregar mas talleres" , "red":"/dashboard"});
+         if(ag.length == 5){
+           return res.render('jserror',{"error":"No puede agregar mas talleres" , "red":"/dashboard#" + req.params.acode});
          }
-         var agn = parseint(req.params.acode.substring(1,4));
+         var agn = parseInt(req.params.acode.substring(1,4));
+         console.log(agn);
          switch (agn) {
            case 1:
-            if(ag.find((a,b)=>{return a=='s002';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s003';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 2:
-            if(ag.find((a,b)=>{return a=='s001';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s004';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 3:
-            if(ag.find((a,b)=>{return a=='s004';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s001';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 4:
-            if(ag.find((a,b)=>{return a=='s003';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s002';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 5:
-            if(ag.find((a,b)=>{return a=='s006';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s007';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            if(ag.find((a,b)=>{return a=='s009';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 6:
-            if(ag.find((a,b)=>{return a=='s005';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s008';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            if(ag.find((a,b)=>{return a=='s010';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 7:
-            if(ag.find((a,b)=>{return a=='s008';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s005';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            if(ag.find((a,b)=>{return a=='s009';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 8:
-            if(ag.find((a,b)=>{return a=='s007';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s006';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            if(ag.find((a,b)=>{return a=='s010';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 9:
-            if(ag.find((a,b)=>{return a=='s010';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s005';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            if(ag.find((a,b)=>{return a=='s007';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 10:
-            if(ag.find((a,b)=>{return a=='s009';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s006';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            if(ag.find((a,b)=>{return a=='s008';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 11:
-            if(ag.find((a,b)=>{return a=='s012';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s012';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
           case 12:
-            if(ag.find((a,b)=>{return a=='s011';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
+            if(ag.find((a,b)=>{return a=='s011';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard#" + req.params.acode});
+            break;
          } // end switch
        }
        agndModel.reservaCupo(req.session.userData._id, req.params.acode, (err, dd)=>{
-         if(err) return res.render('jserror',{"error":err.message , "red":"/dashboard"});
+         if(err) return res.render('jserror',{"error":err.message , "red":"/dashboard#" + req.params.acode});
          if(dd){
            ag.push(req.params.acode);
            req.session.userData.agenda = ag;
-           return res.render('jserror',{"error":"Taller Asociado" , "red":"/dashboard"});
+           return res.render('jserror',{"error":"Taller Asociado" , "red":"/dashboard#" + req.params.acode});
          }else{
-           return res.render('jserror',{"error":"No se pudo asociar Taller" , "red":"/dashboard"});
+           return res.render('jserror',{"error":"No se pudo asociar Taller" , "red":"/dashboard#" + req.params.acode});
          }
        });
        return;

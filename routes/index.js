@@ -116,8 +116,8 @@ function initRoute(db){
                       bltsModel.getBoletosStats(
                         (err,stats)=>{
                             data.stats = Object.assign({gold:0,silver:0},stats);
-                            if(req.session.userData.boletotyp && true){
-                              agndModel.obtenerAgenda(req.session.userData.boletotyp,
+                            if((req.session.userData.boletotyp && true)||res.locals.isAdmin){
+                              agndModel.obtenerAgenda(req.session.userData.boletotyp||'*',
                                                       req.session.userData.agenda || [],
                                   (err,docs)=>{
                                     data.agenda = docs;
@@ -243,6 +243,19 @@ function initRoute(db){
   router.get('/csv/:blttype',validate,checkIsSales,
         function(req,res,next){
           userModel.getUsersByType(req.params.blttype, (err,usrs)=>{
+
+          res.set('Content-Type', 'text/csv');
+          res.set('charset','utf-8');
+          res.set("Content-Disposition", "attachment;"+req.params.blttype+".csv");
+          let bodystr = usrs.map((i)=>{return [i.username,i.useremail,i.boletonum,i.boletotyp].join(",");}).join('\r\n');
+          res.send(Buffer.from(bodystr));
+          }
+        );
+    }
+  );
+  router.get('/agenda/csv/:acode',validate,checkIsSales,
+        function(req,res,next){
+          agndModel.getRegisteredUsers(req.params.acode, (err,usrs)=>{
 
           res.set('Content-Type', 'text/csv');
           res.set('charset','utf-8');

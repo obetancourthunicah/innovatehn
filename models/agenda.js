@@ -38,6 +38,12 @@ function AgendaModel(db){
 
   this.obtenerAgenda = (type, userSel,handler)=>{
     userSel = userSel || [];
+    let regdata = '';
+    if(type=="*"){
+      regdata = "";
+    }else{
+      regdata = (type=="gold")?'g':'s';
+    }
     let aggre = [
       {$project:{
         acode:1,
@@ -54,7 +60,7 @@ function AgendaModel(db){
         isConferencia:{$eq:["$ctx","Conferencia"]}
       }},
       {$match: {
-        acode:{$regex:(type=="gold")?'g':'s'}
+        acode:{$regex:regdata}
       }
       },
       {$sort:{ini:1}}
@@ -74,6 +80,12 @@ function AgendaModel(db){
     });
   }
 
+  this.getRegisteredUsers = (acode, handler)=>{
+      _self.usersCll.find({agenda : acode}).toArray((err, usrs)=>{
+        if(err) return handler(null,[]);
+        return handler(null,usrs);
+      })
+  }
 } //AgendaModel
 
 module.exports = (db) => {

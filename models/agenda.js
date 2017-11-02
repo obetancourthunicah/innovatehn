@@ -8,8 +8,11 @@ function AgendaModel(db){
   this.agendaCll = db.collection('agenda');
   this.usersCll = db.collection('users');
   let _self = this;
-  this.reservaCupo = (userID, acode,handler)=>{
-    this.agendaCll.findOne({acode:acode}, (err,agd)=>{
+
+  this.reservaCupo = (userID, acode, handler)=>{
+    console.log(userID,acode);
+    this.agendaCll.findOne({"acode":acode}, (err,agd)=>{
+
       if(err) return handler(new Error("Error al buscar agenda"), null);
       if(!agd) return handler(new Error("Error al buscar agenda"), null);
       if((agd.cpr+1) > agd.cpo) return handler(new Error("No Hay mas Cupo"), null);
@@ -17,7 +20,7 @@ function AgendaModel(db){
       _self.agendaCll.updateOne({_id:new ObjectID(agd._id)}, ud);
       let us = {"$addToSet":{"agenda":agd.acode}};
       _self.usersCll.updateOne({_id:new ObjectID(userID)}, us);
-      return(null,true);
+      return handler(null,true);
     }); //findOne
   }
 
@@ -29,7 +32,7 @@ function AgendaModel(db){
       _self.agendaCll.updateOne({_id:new ObjectID(agd._id)}, ud);
       let us = {"$pull":{"agenda":agd.acode}};
       _self.usersCll.updateOne({_id:new ObjectID(userID)}, us);
-      return(null,true);
+      return handler(null,true);
     }); //findOne
   }
 

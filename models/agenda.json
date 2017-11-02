@@ -1,4 +1,4 @@
-[
+var docs = [
   {
     acode:"g001",
     ini:new Date(2017,11,2,8,0,0).getTime(),
@@ -479,4 +479,6 @@
     cpr:0,
     grp:"s_2_11"
   }
-]
+];
+
+db.agenda.insert(docs);

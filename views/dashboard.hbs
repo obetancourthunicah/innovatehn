@@ -50,20 +50,26 @@
               {{plc}}&nbsp;
             </div>
             {{#if isConferencia}}{{else}}
-              {{#if selected}}
-                  <div class="col-s-2 col-m-2 col-l-1 right">
-                    <form action="/remove/{{acode}}" method="post">
-                      <button type="submit" class="primary">+</button>
-                    </form>
-                  </div>
-                {{else}}
-                  <div class="col-s-2 col-m-2 col-l-1 right">
-                    <form action="/add/{{acode}}" method="post">
-                      <button type="submit" class="primary">+</button>
-                    </form>
-                  </div>
+                  {{#if selected}}
+                      <div class="col-s-2 col-m-2 col-l-2 right">
+                        <form action="/remove/{{acode}}" method="post">
+                          <button type="submit" style="background-color:red;color:white;" > -</button>
+                        </form>
+                      </div>
+                    {{else}}
+                    {{#if full}}
+                        <div class="col-s-2 col-m-2 col-l-2 center">
+                            Lleno
+                        </div>
+                    {{else}}
+                      <div class="col-s-2 col-m-2 col-l-2 right">
+                        <form action="/add/{{acode}}" method="post">
+                          <button type="submit" class="primary">+</button>
+                        </form>
+                      </div>
+                  {{/if}}
               {{/if}}
-            {{/if}}
+          {{/if}}
           </div>
           {{/each}}
         </div>

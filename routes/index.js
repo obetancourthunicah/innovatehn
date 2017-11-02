@@ -14,12 +14,14 @@ function initRoute(db){
       res.locals.isStaff = false;
       if(req.session.userData){
         res.locals.username = req.session.userData.username;
-        req.session.userData.userroles.map(function(r,i){
-            res.locals.isAdmin = (r === 'admin')?true:res.locals.isAdmin;
-            res.locals.isSales = (r === 'sales')?true:res.locals.isSales;
-            res.locals.isStaff = (r === 'staff')?true:res.locals.isStaff;
-        });
-        res.locals.roles = req.session.userData.userroles.join(' | ');
+        if(req.session.userData.userroles && true){
+          req.session.userData.userroles.map(function(r,i){
+              res.locals.isAdmin = (r === 'admin')?true:res.locals.isAdmin;
+              res.locals.isSales = (r === 'sales')?true:res.locals.isSales;
+              res.locals.isStaff = (r === 'staff')?true:res.locals.isStaff;
+          });
+          res.locals.roles = req.session.userData.userroles.join(' | ');
+        }
       }
       next();
     }else{
@@ -208,7 +210,7 @@ function initRoute(db){
                           bltsModel.isBoletoAvailable(bnum, (err, doc)=>{
                             if(err || !doc){
                               data.errors = "El número de boleto no está disponible.";
-                              data.boletonum = bnum.toUpperCase;
+                              data.boletonum = bnum.toUpperCase();
                               return res.render('confirmsales',data);
                             }
                             //Guardando el boleto
@@ -221,7 +223,7 @@ function initRoute(db){
                               (err,doc)=>{
                                 if(err){
                                   data.errors = "El número de boleto no está disponible.";
-                                  data.boletonum = bnum.toUpperCase;
+                                  data.boletonum = bnum.toUpperCase();
                                   return res.render('confirmsales',data);
                                 }
                                 var clientName = req.session.sales.user.username;
@@ -251,7 +253,7 @@ function initRoute(db){
         );
     }
   );
-  router.post('/remove/:acode', (req,res,next)=>{
+  router.post('/remove/:acode', validate,(req,res,next)=>{
     agndModel.quitarCupo(req.session.userData._id, req.params.acode,
       (err,done)=>{
         var ag = req.session.userData.agenda || [];
@@ -266,31 +268,37 @@ function initRoute(db){
     );
   });
 
-  router.post('/add/:acode', (req,res,next)=>{
-    var maxS = 0 ;
-    var ag = req.session.userData.agenda || [];
-     if(req.session.userData.boletotyp=="gold"){
+  router.post('/add/:acode', validate,(req,res,next)=>{
+    let maxS = 0 ;
+    let agg = req.session.userData.agenda || [];
+    let ag = agg.filter((a,b)=>{ return (a!==null);});
+    console.log(ag);
+     if(req.session.userData.boletotyp==="gold"){
+
        if(ag.length){
-         if(ag.length = 2){
+         if(ag.length == 2){
            return res.render('jserror',{"error":"No puede agregar mas talleres" , "red":"/dashboard"});
          }
-         if(parseint(ag[0].substring(1,4)) < 19 && parseint(req.params.acode.substring(1,4)) < 19){
+         if(parseInt(ag[0].substring(1,4)) < 19 && parseInt(req.params.acode.substring(1,4)) < 19){
            return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard"});
          }
-         if(parseint(ag[0].substring(1,4)) > 19 && parseint(req.params.acode.substring(1,4)) > 19){
+         if(parseInt(ag[0].substring(1,4)) > 19 && parseInt(req.params.acode.substring(1,4)) > 19){
            return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard"});
          }
        }
-       agndModel.reservaCupo(req.session.userData._id, req.params.acode, (err, done)=>{
+
+       agndModel.reservaCupo(req.session.userData._id, req.params.acode, (err, dd)=>{
          if(err) return res.render('jserror',{"error":err.message , "red":"/dashboard"});
-         if(done){
+         if(dd && true){
            ag.push(req.params.acode);
            req.session.userData.agenda = ag;
+           console.log(ag.length,ag);
            return res.render('jserror',{"error":"Taller Asociado" , "red":"/dashboard"});
          }else{
            return res.render('jserror',{"error":"No se pudo asociar Taller" , "red":"/dashboard"});
          }
        });
+       return;
      }else{
        if(ag.length){
          if(ag.length = 6){
@@ -324,9 +332,9 @@ function initRoute(db){
             if(ag.find((a,b)=>{return a=='s011';})) return res.render('jserror',{"error":"No se puede agregar Taller a la misma hora" , "red":"/dashboard"});
          } // end switch
        }
-       agndModel.reservaCupo(req.session.userData._id, req.params.acode, (err, done)=>{
+       agndModel.reservaCupo(req.session.userData._id, req.params.acode, (err, dd)=>{
          if(err) return res.render('jserror',{"error":err.message , "red":"/dashboard"});
-         if(done){
+         if(dd){
            ag.push(req.params.acode);
            req.session.userData.agenda = ag;
            return res.render('jserror',{"error":"Taller Asociado" , "red":"/dashboard"});
@@ -334,7 +342,9 @@ function initRoute(db){
            return res.render('jserror',{"error":"No se pudo asociar Taller" , "red":"/dashboard"});
          }
        });
+       return;
      }
+     //return res.render('jserror',{"error":"Error no controlado" , "red":"/dashboard"});
   });
 //utilitarios
  function datefiff(){

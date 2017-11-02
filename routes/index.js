@@ -227,8 +227,8 @@ function initRoute(db){
                                   return res.render('confirmsales',data);
                                 }
                                 var clientName = req.session.sales.user.username;
-                                req.session.user.boletonum = bnum.toUpperCase();
-                                req.session.user.boletotyp = req.session.sales.type.toUpperCase();
+                                req.session.userData.boletonum = bnum.toUpperCase();
+                                req.session.userData.boletotyp = req.session.sales.type.toUpperCase();
                                 delete req.session.sales;
                                 return res.render('jserror',{"error":"Boleto " + bnum + " registrado satisfactoriamente a " + clientName + "." , "red":"/sales"});
                               }
@@ -301,7 +301,7 @@ function initRoute(db){
        return;
      }else{
        if(ag.length){
-         if(ag.length = 6){
+         if(ag.length == 6){
            return res.render('jserror',{"error":"No puede agregar mas talleres" , "red":"/dashboard"});
          }
          var agn = parseint(req.params.acode.substring(1,4));

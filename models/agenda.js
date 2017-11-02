@@ -50,11 +50,10 @@ function AgendaModel(db){
         cpo:1,
         cpr:1,
         grp:1,
-        full: {$lt:["$cpr","$cpo"] },
+        full: {$gte:["$cpr","$cpo"] },
         isConferencia:{$eq:["$ctx","Conferencia"]}
       }},
       {$match: {
-        full:true,
         acode:{$regex:(type=="gold")?'g':'s'}
       }
       }

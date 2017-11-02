@@ -46,7 +46,7 @@ function initApp(db){
     // error handler
     app.use(function(err, req, res, next) {
       // set locals, only providing error in development
-      console.log(err);
+      console.log(req.originalUrl, err);
       // res.locals.message = err.message;
       // res.locals.error = req.app.get('env') === 'development' ? err : {};
       //

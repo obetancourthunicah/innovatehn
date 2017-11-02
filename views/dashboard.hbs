@@ -31,22 +31,43 @@
     </div>
     <div class="col-s-4 col-m-7 col-l-8">
       <div class="row widgets">
-        <div class="card col-s-4 col-m-12 col-l-5 center">
-            <b>En {{datediff}} días te esperamos para el mayor evento tecnológico.
-              Si aun no tienes tu boleto aun estas a tiempo</b>
-            <div>
-              <br />
-              <b>Contactanos</b>
-              <ul style="list-style:none;padding:0px;font-family:monospace;">
-                <li>98187817</li>
-                <li>95946513</li>
-                <li>32826403</li>
-                <li>97903708</li>
-                <li>aiccscj@unicah.edu</li>
-              </ul>
+        {{#if user.boletonum}}
+        <div class="card col-s-4 col-m-12 col-l-12">
+          <h2>Agenda InnovateHN</h2>
+          {{#each agenda}}
+          <div class="row {{#if isConferencia}} tall{{/if}} {{#if selected}} tall{{/if}}" style="padding-top:0.75em;border-bottom:solid 1px #ddd;">
+            <div class="col-s-2 col-m-2 col-l-2" style="padding-left:0.5em">
+              {{ini}}<br />
+              {{hini}} - {{hend}}
             </div>
+            <div class="col-s-2 col-m-4 col-l-4" style="padding-right:0.75em;">
+              {{dsc}}
+            </div>
+            <div class="col-s-2 col-m-2 col-l-2">
+              {{who}}&nbsp;
+            </div>
+            <div class="col-s-2 col-m-2 col-l-2">
+              {{plc}}&nbsp;
+            </div>
+            {{#if isConferencia}}{{else}}
+              {{#if selected}}
+                  <div class="col-s-2 col-m-2 col-l-1 right">
+                    <form action="/remove/{{acode}}" method="post">
+                      <button type="submit" class="primary">+</button>
+                    </form>
+                  </div>
+                {{else}}
+                  <div class="col-s-2 col-m-2 col-l-1 right">
+                    <form action="/add/{{acode}}" method="post">
+                      <button type="submit" class="primary">+</button>
+                    </form>
+                  </div>
+              {{/if}}
+            {{/if}}
+          </div>
+          {{/each}}
         </div>
-
+        {{/if}}
         {{#if isAdmin}}
           <div class="card col-s-4 col-m-12 col-l-4 center">
             <b>Registrados</b><br />

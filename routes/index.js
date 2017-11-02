@@ -5,6 +5,7 @@ function initRoute(db){
   //Instancias de los Modelos
   const userModel = require('../models/users.js')(db);
   const bltsModel = require('../models/boletos.js')(db);
+  const agndModel = require('../models/agenda.js')(db);
   //Middlewares
   const validate= (req,res,next)=>{
     if (req.session.useremail && !(/^\s+$|^$/gi).test(req.session.useremail) ){
@@ -113,7 +114,17 @@ function initRoute(db){
                       bltsModel.getBoletosStats(
                         (err,stats)=>{
                             data.stats = Object.assign({gold:0,silver:0},stats);
-                            return res.render('dashboard',data);
+                            if(req.session.userData.boletotyp && true){
+                              agndModel.obtenerAgenda(req.session.userData.boletotyp,
+                                                      req.session.userData.agenda || [],
+                                  (err,docs)=>{
+                                    data.agenda = docs;
+                                    return res.render('dashboard',data);
+                                  });
+                            }else{
+                              return res.render('dashboard',data);
+                            }
+
                         }
                       ); //getBoletosStats
 
@@ -232,6 +243,7 @@ function initRoute(db){
           userModel.getUsersByType(req.params.blttype, (err,usrs)=>{
 
           res.set('Content-Type', 'text/csv');
+          res.set('charset','utf-8');
           res.set("Content-Disposition", "attachment;"+req.params.blttype+".csv");
           let bodystr = usrs.map((i)=>{return [i.username,i.useremail,i.boletonum,i.boletotyp].join(",");}).join('\r\n');
           res.send(Buffer.from(bodystr));
@@ -240,6 +252,47 @@ function initRoute(db){
     }
   );
 
+  router.post('/add/:acode/:grp', (req,res,next)=>{
+    var maxS = 0 ;
+    var ag = req.session.userData.agenda || [];
+     if(req.session.userData.boletotyp=="gold"){
+       if(ag.length){
+         if(ag.length = 2){
+           return res.render('jserror',{"error":"No puede agregar mas talleres" , "red":"/dashboard"});
+         }
+         if(parseint(ag[0].substring(1,3)) < 19 && parseint(req.params.acode.substring(1,3)) < 19){
+           return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard"});
+         }
+         if(parseint(ag[0].substring(1,3)) > 19 && parseint(req.params.acode.substring(1,3)) > 19){
+           return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard"});
+         }
+       }
+       agndModel.reservaCupo(req.session.userData._id, req.params.acode, (err, done)=>{
+         if(err) return res.render('jserror',{"error":err.message , "red":"/dashboard"});
+         if(done){
+           ag.push(req.params.acode);
+           req.session.userData.agenda = ag;
+           return res.render('jserror',{"error":"Taller Asociado" , "red":"/dashboard"});
+         }else{
+           return res.render('jserror',{"error":"No se pudo asociar Taller" , "red":"/dashboard"});
+         }
+       });
+     }else{
+       if(ag.length){
+         if(ag.length = 6){
+           return res.render('jserror',{"error":"No puede agregar mas talleres" , "red":"/dashboard"});
+         }
+         if(parseint(ag[0].substring(1,3)) < 2 && parseint(req.params.acode.substring(1,3)) < 19){
+           return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard"});
+         }
+         if(parseint(ag[0].substring(1,3)) > 19 && parseint(req.params.acode.substring(1,3)) > 19){
+           return res.render('jserror',{"error":"Solo un Taller por Día" , "red":"/dashboard"});
+         }
+       }
+     }
+
+
+  });
 //utilitarios
  function datefiff(){
    let ed = new Date(2017,10,2,0,0,0,0);
